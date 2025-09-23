@@ -3,7 +3,9 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
-        const q = searchParams.get("q") || "technology";
+        const q = searchParams.get("q") || "";
+        const topic = searchParams.get("topic"); // optional topic/category
+        const isBreaking = searchParams.get("breaking") === "1";
         
         // Check if API key is available
         if (!process.env.GNEWS_API_KEY) {
@@ -13,9 +15,30 @@ export async function GET(request: Request) {
             );
         }
 
-        const res = await fetch(
-            `https://gnews.io/api/v4/search?q=${q}&lang=en&country=us&max=10&apikey=${process.env.GNEWS_API_KEY}`
-        );
+        const endpoint = isBreaking ? "https://gnews.io/api/v4/top-headlines" : "https://gnews.io/api/v4/search";
+        const baseUrl = new URL(endpoint);
+        if (!isBreaking) {
+            baseUrl.searchParams.set("q", q);
+        }
+        baseUrl.searchParams.set("lang", "en");
+        baseUrl.searchParams.set("country", "us");
+        baseUrl.searchParams.set("max", "10");
+        baseUrl.searchParams.set("apikey", process.env.GNEWS_API_KEY);
+
+        // GNews supports topic param: world, nation, business, technology, entertainment, sports, science, health
+        if (topic) {
+            baseUrl.searchParams.set("topic", topic);
+        }
+
+        // Require a query or topic unless requesting breaking headlines
+        if (!isBreaking && !q && !topic) {
+            return NextResponse.json(
+                { error: "Missing query or topic" },
+                { status: 400 }
+            );
+        }
+
+        const res = await fetch(baseUrl.toString());
 
         if (!res.ok) {
             return NextResponse.json(
