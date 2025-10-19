@@ -6,6 +6,8 @@ export async function GET(request: Request) {
         const q = searchParams.get("q") || "";
         const topic = searchParams.get("topic"); // optional topic/category
         const isBreaking = searchParams.get("breaking") === "1";
+        const page = searchParams.get("page") || "1";
+        const fromDate = searchParams.get("fromDate");
         
         // Check if API key is available
         if (!process.env.GNEWS_API_KEY) {
@@ -15,25 +17,38 @@ export async function GET(request: Request) {
             );
         }
 
-        const endpoint = isBreaking ? "https://gnews.io/api/v4/top-headlines" : "https://gnews.io/api/v4/search";
+        // Use search endpoint for all requests to support pagination and date filtering
+        const endpoint = "https://gnews.io/api/v4/search";
         const baseUrl = new URL(endpoint);
-        if (!isBreaking) {
+        
+        if (q) {
             baseUrl.searchParams.set("q", q);
+        } else if (topic) {
+            // Convert topic to search query for better pagination support
+            baseUrl.searchParams.set("q", topic);
+        } else if (isBreaking) {
+            baseUrl.searchParams.set("q", "breaking news");
         }
+        
         baseUrl.searchParams.set("lang", "en");
         baseUrl.searchParams.set("country", "us");
         baseUrl.searchParams.set("max", "10");
         baseUrl.searchParams.set("apikey", process.env.GNEWS_API_KEY);
-
-        // GNews supports topic param: world, nation, business, technology, entertainment, sports, science, health
-        if (topic) {
-            baseUrl.searchParams.set("topic", topic);
+        
+        // Add pagination support
+        if (page && page !== "1") {
+            baseUrl.searchParams.set("page", page);
+        }
+        
+        // Add date filtering for older articles
+        if (fromDate) {
+            baseUrl.searchParams.set("from", fromDate);
         }
 
-        // Require a query or topic unless requesting breaking headlines
+        // Require a query, topic, or breaking flag
         if (!isBreaking && !q && !topic) {
             return NextResponse.json(
-                { error: "Missing query or topic" },
+                { error: "Missing query, topic, or breaking parameter" },
                 { status: 400 }
             );
         }
