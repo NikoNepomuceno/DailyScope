@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useMemo } from "react";
+import { usePosts } from "@/hooks/usePosts";
 import Toolbar from "@/components/news/Toolbar";
 import BreakingTicker from "@/components/news/BreakingTicker";
 import SearchBar from "@/components/news/SearchBar";
@@ -10,6 +11,7 @@ export default function HomePage() {
   // ----------------------------
   // State management
   // ----------------------------
+  
   const [articles, setArticles] = useState<any[]>([]);
   const [breakingHeadlines, setBreakingHeadlines] = useState<string[]>([]);
   const [query, setQuery] = useState("");
@@ -24,6 +26,12 @@ export default function HomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreArticles, setHasMoreArticles] = useState(true);
   const [oldestArticleDate, setOldestArticleDate] = useState<string | null>(null);
+  // Example data-fetching hook usage (from JSONPlaceholder)
+  const {
+    data: posts,
+    isLoading: postsLoading,
+    error: postsError
+  } = usePosts();
 
   // ----------------------------
   // Effects
@@ -82,7 +90,7 @@ export default function HomePage() {
         setOldestArticleDate(oldestDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
       }
       
-      // Check if we have more articles (assuming 10 articles per page)
+      // Check if we have more articles
       setHasMoreArticles(newArticles.length === 10);
     } catch (err: any) {
       setError(err.message || "Something went wrong.");
@@ -107,7 +115,7 @@ export default function HomePage() {
         if (data.articles && data.articles.length > 0) {
           setArticles(data.articles);
           setBreakingHeadlines(data.articles.slice(0, 10).map((a: any) => a.title));
-          setHasSearched(true); // Show articles immediately
+          setHasSearched(true);
         } else {
           // Fallback: try to fetch any news if general topic fails
           const fallbackRes = await fetch("/api/news?topic=world");
@@ -292,6 +300,20 @@ export default function HomePage() {
           )}
         </>
       )}
+      
+      {/* Demo: Posts fetched via React Query (JSONPlaceholder) */}
+      <section className="demo-posts" style={{ marginTop: "2rem" }}>
+        <h2>Demo Posts (JSONPlaceholder)</h2>
+        {postsLoading && <p>Loading posts…</p>}
+        {postsError && <p>Error loading posts: {(postsError as Error).message}</p>}
+        {!postsLoading && !postsError && (
+          <ul>
+            {posts?.slice(0, 10).map((p: any) => (
+              <li key={p.id}>{p.title}</li>
+            ))}
+          </ul>
+        )}
+      </section>
     </main>
   );
 }
