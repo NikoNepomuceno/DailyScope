@@ -6,7 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "outline";
 }
 
-export function Button({ className = "", variant = "default", ...props }: ButtonProps) {
+export default function Button({ className = "", variant = "default", ...props }: ButtonProps) {
   const base = "px-3 py-2 rounded-md transition-colors";
   const styles =
     variant === "outline"
@@ -20,3 +20,4 @@ export function Button({ className = "", variant = "default", ...props }: Button
     />
   );
 }
+

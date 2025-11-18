@@ -1,8 +1,6 @@
 'use client';
 
-interface BreakingTickerProps {
-  headlines: string[];
-}
+import type { BreakingTickerProps } from "@/interfaces/news";
 
 export default function BreakingTicker({ headlines }: BreakingTickerProps) {
   if (headlines.length === 0) return null;
@@ -25,3 +23,4 @@ export default function BreakingTicker({ headlines }: BreakingTickerProps) {
     </div>
   );
 }
+

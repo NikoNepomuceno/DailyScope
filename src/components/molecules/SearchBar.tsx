@@ -2,12 +2,7 @@
 
 import { Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-interface SearchBarProps {
-  query: string;
-  setQuery: (value: string) => void;
-  onSearch: (e: React.FormEvent) => void;
-}
+import type { SearchBarProps } from "@/interfaces/news";
 
 export default function SearchBar({ query, setQuery, onSearch }: SearchBarProps) {
   const [isSticky, setIsSticky] = useState(false);
@@ -64,3 +59,4 @@ export default function SearchBar({ query, setQuery, onSearch }: SearchBarProps)
     </div>
   );
 }
+

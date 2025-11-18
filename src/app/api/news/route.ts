@@ -117,11 +117,12 @@ export async function GET(request: Request) {
             return NextResponse.json(MOCK_NEWS_DATA);
         }
 
-        const endpoint = isBreaking ? "https://gnews.io/api/v4/top-headlines" : "https://gnews.io/api/v4/search";
-        const baseUrl = new URL(endpoint);
-        if (!isBreaking) {
-            baseUrl.searchParams.set("q", q);
-        }
+		const useTopHeadlines = isBreaking || (!!topic && !q);
+		const endpoint = useTopHeadlines ? "https://gnews.io/api/v4/top-headlines" : "https://gnews.io/api/v4/search";
+		const baseUrl = new URL(endpoint);
+		if (!useTopHeadlines && q) {
+			baseUrl.searchParams.set("q", q);
+		}
         baseUrl.searchParams.set("lang", "en");
         baseUrl.searchParams.set("country", "us");
         baseUrl.searchParams.set("max", "10");

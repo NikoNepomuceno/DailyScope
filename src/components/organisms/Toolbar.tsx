@@ -1,16 +1,7 @@
 'use client';
 
 import { Volume2, VolumeX, Moon, Sun, ZoomIn, ZoomOut } from "lucide-react";
-
-interface ToolbarProps {
-  darkMode: boolean;
-  toggleDarkMode: () => void;
-  fontSize: number;
-  increaseFontSize: () => void;
-  decreaseFontSize: () => void;
-  isSpeaking: boolean;
-  toggleSpeech: () => void;
-}
+import type { ToolbarProps } from "@/interfaces/news";
 
 export default function Toolbar({
   darkMode,
@@ -42,3 +33,4 @@ export default function Toolbar({
     </div>
   );
 }
+

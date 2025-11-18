@@ -2,20 +2,21 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { usePosts } from "@/hooks/usePosts";
-import Toolbar from "@/components/news/Toolbar";
-import BreakingTicker from "@/components/news/BreakingTicker";
-import SearchBar from "@/components/news/SearchBar";
-import ArticleList from "@/components/news/ArticleList";
+import Toolbar from "@/components/organisms/Toolbar";
+import BreakingTicker from "@/components/molecules/BreakingTicker";
+import SearchBar from "@/components/molecules/SearchBar";
+import ArticleList from "@/components/organisms/ArticleList";
+import type { NewsArticle, NewsApiResponse } from "@/interfaces/news";
 
 export default function HomePage() {
   // ----------------------------
   // State management
   // ----------------------------
   
-  const [articles, setArticles] = useState<any[]>([]);
+  const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [breakingHeadlines, setBreakingHeadlines] = useState<string[]>([]);
   const [query, setQuery] = useState("");
-  const [bookmarks, setBookmarks] = useState<any[]>([]);
+  const [bookmarks, setBookmarks] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [darkMode, setDarkMode] = useState(false);
@@ -69,7 +70,7 @@ export default function HomePage() {
       setLoading(true);
       setError(null);
       const res = await fetch(url);
-      const data = await res.json();
+      const data: NewsApiResponse = await res.json();
 
       if (data.error) throw new Error(data.error);
       
@@ -85,8 +86,8 @@ export default function HomePage() {
       
       // Track the oldest article date for pagination
       if (newArticles.length > 0) {
-        const dates = newArticles.map((article: any) => new Date(article.publishedAt || article.pubDate || Date.now()));
-        const oldestDate = new Date(Math.min(...dates.map((d: Date) => d.getTime())));
+        const dates = newArticles.map((article) => new Date(article.publishedAt || Date.now()));
+        const oldestDate = new Date(Math.min(...dates.map((d) => d.getTime())));
         setOldestArticleDate(oldestDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
       }
       
@@ -106,7 +107,7 @@ export default function HomePage() {
         setLoading(true);
         setError(null);
         const res = await fetch("/api/news?topic=general");
-        const data = await res.json();
+        const data: NewsApiResponse = await res.json();
         
         if (data.error) {
           throw new Error(data.error);
@@ -114,15 +115,15 @@ export default function HomePage() {
         
         if (data.articles && data.articles.length > 0) {
           setArticles(data.articles);
-          setBreakingHeadlines(data.articles.slice(0, 10).map((a: any) => a.title));
+          setBreakingHeadlines(data.articles.slice(0, 10).map((a) => a.title));
           setHasSearched(true);
         } else {
           // Fallback: try to fetch any news if general topic fails
           const fallbackRes = await fetch("/api/news?topic=world");
-          const fallbackData = await fallbackRes.json();
+          const fallbackData: NewsApiResponse = await fallbackRes.json();
           if (fallbackData.articles && fallbackData.articles.length > 0) {
             setArticles(fallbackData.articles);
-            setBreakingHeadlines(fallbackData.articles.slice(0, 10).map((a: any) => a.title));
+            setBreakingHeadlines(fallbackData.articles.slice(0, 10).map((a) => a.title));
             setHasSearched(true);
           } else {
             setError("No news articles available at the moment");
@@ -177,7 +178,7 @@ export default function HomePage() {
     await fetchNews(url, true);
   };
 
-  const toggleBookmark = (article: any) => {
+  const toggleBookmark = (article: NewsArticle) => {
     setBookmarks((prev) => {
       const exists = prev.some((b) => b.url === article.url);
       const updated = exists ? prev.filter((b) => b.url !== article.url) : [article, ...prev];

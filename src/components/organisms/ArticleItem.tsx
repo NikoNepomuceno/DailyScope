@@ -2,22 +2,7 @@
 
 import { Bookmark, BookmarkCheck, Volume2, VolumeX } from "lucide-react";
 import { useState } from "react";
-
-interface Article {
-  title: string;
-  description: string;
-  url: string;
-  image?: string;
-  publishedAt?: string;
-  source?: string | { id?: string; name?: string; url?: string; country?: string };
-}
-
-interface ArticleItemProps {
-  article: Article;
-  isBookmarked: boolean;
-  onToggleBookmark: () => void;
-  fontSize: number;
-}
+import type { ArticleItemProps, NewsSource } from "@/interfaces/news";
 
 export default function ArticleItem({ article, isBookmarked, onToggleBookmark, fontSize }: ArticleItemProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -36,7 +21,7 @@ export default function ArticleItem({ article, isBookmarked, onToggleBookmark, f
     }
   };
 
-  const getSourceName = (source?: string | { id?: string; name?: string; url?: string; country?: string }) => {
+  const getSourceName = (source?: string | NewsSource) => {
     if (!source) return null;
     if (typeof source === 'string') return source;
     return source.name || source.id || 'Unknown Source';
@@ -104,3 +89,4 @@ export default function ArticleItem({ article, isBookmarked, onToggleBookmark, f
     </div>
   );
 }
+

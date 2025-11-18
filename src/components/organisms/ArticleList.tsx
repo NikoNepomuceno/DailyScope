@@ -1,13 +1,7 @@
 'use client';
 
 import ArticleItem from "./ArticleItem";
-
-interface ArticleListProps {
-  articles: any[];
-  bookmarks: any[];
-  toggleBookmark: (article: any) => void;
-  fontSize: number;
-}
+import type { ArticleListProps } from "@/interfaces/news";
 
 export default function ArticleList({ articles, bookmarks, toggleBookmark, fontSize }: ArticleListProps) {
   if (articles.length === 0)
@@ -27,3 +21,4 @@ export default function ArticleList({ articles, bookmarks, toggleBookmark, fontS
     </div>
   );
 }
+
