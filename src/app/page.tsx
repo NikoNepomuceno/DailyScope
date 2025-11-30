@@ -108,7 +108,10 @@ export const metadata: Metadata = {
 /**
  * Home Page - Server Component with SSR/ISR
  * Fetches initial data on the server for better SEO and performance
+ * Revalidates every 60 seconds to keep content fresh
  */
+export const revalidate = 60;
+
 export default async function HomePage() {
   // Fetch initial data on the server
   const { articles, breakingHeadlines } = await getInitialNews();

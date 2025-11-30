@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, useMemo } from "react";
-import { usePosts } from "@/hooks/usePosts";
 import type { NewsArticle, NewsApiResponse } from "@/interfaces/news";
 
 interface HomePageClientProps {
@@ -18,7 +17,7 @@ export default function HomePageClient({
   // ----------------------------
   
   const [articles, setArticles] = useState<NewsArticle[]>(initialArticles);
-  const [breakingHeadlines] = useState<string[]>(initialBreakingHeadlines);
+  const [breakingHeadlines, setBreakingHeadlines] = useState<string[]>(initialBreakingHeadlines);
   const [query, setQuery] = useState("");
   const [bookmarks, setBookmarks] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(false);
@@ -31,16 +30,19 @@ export default function HomePageClient({
   const [hasMoreArticles, setHasMoreArticles] = useState(true);
   const [oldestArticleDate, setOldestArticleDate] = useState<string | null>(null);
   
-  // Example data-fetching hook usage (from JSONPlaceholder)
-  const {
-    data: posts,
-    isLoading: postsLoading,
-    error: postsError
-  } = usePosts();
-
   // ----------------------------
   // Effects
   // ----------------------------
+
+  // Sync breakingHeadlines when props change
+  useEffect(() => {
+    setBreakingHeadlines(initialBreakingHeadlines);
+  }, [initialBreakingHeadlines]);
+
+  // Sync articles when props change
+  useEffect(() => {
+    setArticles(initialArticles);
+  }, [initialArticles]);
 
   // Load bookmarks + dark mode + font size on mount
   useEffect(() => {
