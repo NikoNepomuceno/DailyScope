@@ -5,20 +5,16 @@ import type { ArticleListProps } from "@/interfaces/news";
 
 export default function ArticleList({ articles, bookmarks, toggleBookmark, fontSize }: ArticleListProps) {
   if (articles.length === 0)
-    return <div className="no-results">No articles found.</div>;
+    return (
+      <section>
+        {/* HTML structure removed - ready for rebuild */}
+      </section>
+    );
 
   return (
-    <div className="news-list">
-      {articles.map((article, i) => (
-        <ArticleItem
-          key={i}
-          article={article}
-          fontSize={fontSize}
-          isBookmarked={bookmarks.some((b) => b.url === article.url)}
-          onToggleBookmark={() => toggleBookmark(article)}
-        />
-      ))}
-    </div>
+    <section>
+      {/* HTML structure removed - ready for rebuild */}
+    </section>
   );
 }
 

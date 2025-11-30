@@ -1,8 +1,7 @@
-import { NextResponse } from "next/server";
-import { fetchNews } from "@/services/newsService";
+import type { NewsApiResponse } from "@/interfaces/news";
 
-// Re-export mock data for backward compatibility if needed
-const MOCK_NEWS_DATA = {
+// Mock data for development/testing when API is unreachable
+const MOCK_NEWS_DATA: NewsApiResponse = {
     totalArticles: 10,
     articles: [
         {
@@ -98,36 +97,104 @@ const MOCK_NEWS_DATA = {
     ]
 };
 
-export async function GET(request: Request) {
+export interface NewsFetchOptions {
+    q?: string;
+    topic?: string;
+    breaking?: boolean;
+    page?: number;
+    fromDate?: string;
+}
+
+/**
+ * Shared service for fetching news data
+ * Can be used by both API routes and server components
+ */
+export async function fetchNews(options: NewsFetchOptions = {}): Promise<NewsApiResponse> {
     try {
-        const { searchParams } = new URL(request.url);
-        const q = searchParams.get("q") || "";
-        const topic = searchParams.get("topic");
-        const isBreaking = searchParams.get("breaking") === "1";
-        const page = searchParams.get("page");
-        const fromDate = searchParams.get("fromDate");
-
-        // Use the shared news service
-        const data = await fetchNews({
-            q: q || undefined,
-            topic: topic || undefined,
-            breaking: isBreaking,
-            page: page ? parseInt(page) : undefined,
-            fromDate: fromDate || undefined,
-        });
-
-        // If there's an error and no articles, return error response
-        if (data.error && (!data.articles || data.articles.length === 0)) {
-            return NextResponse.json(
-                { error: data.error },
-                { status: 400 }
-            );
+        const { q = "", topic, breaking = false } = options;
+        const useMockData = process.env.USE_MOCK_NEWS_DATA === 'true';
+        
+        // Use mock data if enabled
+        if (useMockData) {
+            console.log('📰 Using mock news data (USE_MOCK_NEWS_DATA=true)');
+            return MOCK_NEWS_DATA;
+        }
+        
+        // Check if API key is available
+        if (!process.env.GNEWS_API_KEY) {
+            console.warn('⚠️  GNEWS_API_KEY not configured - using mock data');
+            return MOCK_NEWS_DATA;
         }
 
-        return NextResponse.json(data);
+        const useTopHeadlines = breaking || (!!topic && !q);
+        const endpoint = useTopHeadlines 
+            ? "https://gnews.io/api/v4/top-headlines" 
+            : "https://gnews.io/api/v4/search";
+        const baseUrl = new URL(endpoint);
+        
+        if (!useTopHeadlines && q) {
+            baseUrl.searchParams.set("q", q);
+        }
+        
+        baseUrl.searchParams.set("lang", "en");
+        baseUrl.searchParams.set("country", "us");
+        baseUrl.searchParams.set("max", "10");
+        baseUrl.searchParams.set("apikey", process.env.GNEWS_API_KEY);
+
+        // GNews supports topic param: world, nation, business, technology, entertainment, sports, science, health
+        if (topic) {
+            baseUrl.searchParams.set("topic", topic);
+        }
+
+        // Require a query or topic unless requesting breaking headlines
+        if (!breaking && !q && !topic) {
+            return {
+                error: "Missing query or topic",
+                articles: []
+            };
+        }
+
+        // Add timeout and better error handling
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
+        try {
+            const res = await fetch(baseUrl.toString(), {
+                signal: controller.signal,
+                headers: {
+                    'Accept': 'application/json',
+                    'User-Agent': 'DailyScope/1.0'
+                }
+            });
+
+            clearTimeout(timeoutId);
+
+            if (!res.ok) {
+                const errorText = await res.text().catch(() => res.statusText);
+                console.error(`GNews API error: ${res.status} - ${errorText}`);
+                // Fall back to mock data on API errors
+                console.log('⚠️  Using mock news data due to API error');
+                return MOCK_NEWS_DATA;
+            }
+
+            const data = await res.json();
+            return data;
+        } catch (fetchError: any) {
+            clearTimeout(timeoutId);
+            
+            if (fetchError.name === 'AbortError') {
+                console.error('Request timeout after 15 seconds - using mock data');
+            } else {
+                console.error('Fetch error:', fetchError.message, '- using mock data');
+            }
+            
+            console.log('⚠️  Using mock news data due to API connectivity issues');
+            return MOCK_NEWS_DATA;
+        }
     } catch (error) {
-        console.error("News API error:", error);
+        console.error("News service error:", error);
         console.log('⚠️  Using mock news data due to error');
-        return NextResponse.json(MOCK_NEWS_DATA);
+        return MOCK_NEWS_DATA;
     }
 }
+
