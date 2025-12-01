@@ -9,7 +9,7 @@ import { fetchNews } from "@/services/newsService";
 // The component will still be code-split and lazy-loaded on the client
 const HomePageClient = dynamic(
   () => import('@/components/pages/HomePageClient'),
-  { 
+  {
     loading: () => <div className="loading">Loading DailyScope News...</div>
   }
 );
@@ -118,9 +118,9 @@ export default async function HomePage() {
 
   return (
     <Suspense fallback={<div className="loading">Loading DailyScope News...</div>}>
-      <HomePageClient 
-        initialArticles={articles} 
-        initialBreakingHeadlines={breakingHeadlines} 
+      <HomePageClient
+        initialArticles={articles}
+        initialBreakingHeadlines={breakingHeadlines}
       />
     </Suspense>
   );

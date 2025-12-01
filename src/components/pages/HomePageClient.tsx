@@ -2,6 +2,11 @@
 
 import { useEffect, useState, useMemo } from "react";
 import type { NewsArticle, NewsApiResponse } from "@/interfaces/news";
+import Navbar from "@/components/landing/Navbar";
+import HeroSection from "@/components/landing/HeroSection";
+import AboutSection from "@/components/landing/AboutSection";
+import TestimonialsSection from "@/components/landing/TestimonialsSection";
+import FooterSection from "@/components/landing/FooterSection";
 
 interface HomePageClientProps {
   initialArticles: NewsArticle[];
@@ -183,9 +188,22 @@ export default function HomePageClient({
   // Render
   // ----------------------------
   return (
-    <main>
-      {/* HTML structure removed - ready for rebuild */}
-    </main>
+    <div className="ds-page">
+      <Navbar />
+      <main className="ds-main">
+        <HeroSection
+          onPrimaryCtaClick={() => {
+            const el = document.getElementById("about");
+            if (el) {
+              el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }}
+        />
+        <AboutSection />
+        <TestimonialsSection />
+      </main>
+      <FooterSection />
+    </div>
   );
 }
 
