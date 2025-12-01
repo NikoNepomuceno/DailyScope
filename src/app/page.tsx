@@ -5,13 +5,13 @@ import type { NewsArticle } from "@/interfaces/news";
 import { fetchNews } from "@/services/newsService";
 
 // Lazy load heavy components to reduce initial bundle size.
-// HomePageClient is a client component, so we disable SSR for it to avoid
-// hydration issues and ensure it only renders on the client.
+// HomePageClient is a client component imported into this server component.
+// We rely on Next.js to handle the client boundary; SSR disabling is not
+// supported in App Router server components.
 const HomePageClient = dynamic(
   () => import('@/components/pages/HomePageClient'),
   {
     loading: () => <div className="loading">Loading DailyScope News...</div>,
-    ssr: false,
   }
 );
 

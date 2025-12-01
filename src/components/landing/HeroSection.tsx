@@ -143,20 +143,22 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
                     // Render plain space token
                     if (isSpaceToken) {
                       const indexForSpace = runningIndex++;
-                      const commonProps = {
-                        key: `space-${partIndex}-${tokenIndex}`,
-                        className: "ds-hero-letter ds-hero-letter-space",
-                        custom: indexForSpace,
-                        initial: prefersReducedMotion
-                          ? { opacity: 1, y: 0 }
-                          : { opacity: 0, y: 16 },
-                        animate: prefersReducedMotion
-                          ? { opacity: 1, y: 0 }
-                          : letterControls,
-                      };
-
                       return (
-                        <motion.div {...commonProps}>
+                        <motion.div
+                          key={`space-${partIndex}-${tokenIndex}`}
+                          className="ds-hero-letter ds-hero-letter-space"
+                          custom={indexForSpace}
+                          initial={
+                            prefersReducedMotion
+                              ? { opacity: 1, y: 0 }
+                              : { opacity: 0, y: 16 }
+                          }
+                          animate={
+                            prefersReducedMotion
+                              ? { opacity: 1, y: 0 }
+                              : letterControls
+                          }
+                        >
                           {"\u00A0"}
                         </motion.div>
                       );
@@ -174,20 +176,25 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
                       >
                         {letters.map((char, charIndex) => {
                           const globalIndex = runningIndex++;
-
-                          const commonProps = {
-                            key: `${partIndex}-${tokenIndex}-${charIndex}`,
-                            className: "ds-hero-letter",
-                            custom: globalIndex,
-                            initial: prefersReducedMotion
-                              ? { opacity: 1, y: 0 }
-                              : { opacity: 0, y: 16 },
-                            animate: prefersReducedMotion
-                              ? { opacity: 1, y: 0 }
-                              : letterControls,
-                          };
-
-                          return <motion.div {...commonProps}>{char}</motion.div>;
+                          return (
+                            <motion.div
+                              key={`${partIndex}-${tokenIndex}-${charIndex}`}
+                              className="ds-hero-letter"
+                              custom={globalIndex}
+                              initial={
+                                prefersReducedMotion
+                                  ? { opacity: 1, y: 0 }
+                                  : { opacity: 0, y: 16 }
+                              }
+                              animate={
+                                prefersReducedMotion
+                                  ? { opacity: 1, y: 0 }
+                                  : letterControls
+                              }
+                            >
+                              {char}
+                            </motion.div>
+                          );
                         })}
                       </span>
                     );
