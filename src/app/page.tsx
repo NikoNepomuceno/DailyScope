@@ -4,13 +4,14 @@ import dynamic from 'next/dynamic';
 import type { NewsArticle } from "@/interfaces/news";
 import { fetchNews } from "@/services/newsService";
 
-// Lazy load heavy components to reduce initial bundle size
-// Note: ssr: false removed as it's not allowed in Server Components
-// The component will still be code-split and lazy-loaded on the client
+// Lazy load heavy components to reduce initial bundle size.
+// HomePageClient is a client component, so we disable SSR for it to avoid
+// hydration issues and ensure it only renders on the client.
 const HomePageClient = dynamic(
   () => import('@/components/pages/HomePageClient'),
   {
-    loading: () => <div className="loading">Loading DailyScope News...</div>
+    loading: () => <div className="loading">Loading DailyScope News...</div>,
+    ssr: false,
   }
 );
 

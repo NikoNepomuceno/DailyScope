@@ -15,7 +15,6 @@ export default function SearchBar({ query, setQuery, onSearch }: SearchBarProps)
     const handleScroll = () => {
       if (searchContainerRef.current) {
         const rect = searchContainerRef.current.getBoundingClientRect();
-        // Check if the search container is at the top of the viewport
         setIsSticky(rect.top <= 0);
       }
     };
