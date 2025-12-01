@@ -97,9 +97,15 @@ export default function HomePageClient({
       
       // Track the oldest article date for pagination
       if (newArticles.length > 0) {
-        const dates = newArticles.map((article) => new Date(article.publishedAt || Date.now()));
-        const oldestDate = new Date(Math.min(...dates.map((d) => d.getTime())));
-        setOldestArticleDate(oldestDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+        // Only consider articles that actually have a valid publishedAt date.
+        const validDates = newArticles
+          .map((article) => (article.publishedAt ? new Date(article.publishedAt) : null))
+          .filter((d): d is Date => d !== null && !isNaN(d.getTime()));
+
+        if (validDates.length > 0) {
+          const oldestDate = new Date(Math.min(...validDates.map((d) => d.getTime())));
+          setOldestArticleDate(oldestDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+        }
       }
       
       // Check if we have more articles

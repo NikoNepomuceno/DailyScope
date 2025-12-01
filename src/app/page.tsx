@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import type { NewsArticle } from "@/interfaces/news";
@@ -118,11 +117,9 @@ export default async function HomePage() {
   const { articles, breakingHeadlines } = await getInitialNews();
 
   return (
-    <Suspense fallback={<div className="loading">Loading DailyScope News...</div>}>
-      <HomePageClient
-        initialArticles={articles}
-        initialBreakingHeadlines={breakingHeadlines}
-      />
-    </Suspense>
+    <HomePageClient
+      initialArticles={articles}
+      initialBreakingHeadlines={breakingHeadlines}
+    />
   );
 }
