@@ -30,9 +30,7 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
           x: [24, 0, 0, -12],
           transition: {
             duration: CHIP_LOOP_DURATION,
-            ease: "easeInOut",
             repeat: Infinity,
-            repeatType: "loop",
             delay: index * 0.4,
             times: CHIP_KEYFRAME_TIMES,
           },
@@ -48,9 +46,7 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
         x: [-24, 0, 0, 12],
         transition: {
           duration: CHIP_LOOP_DURATION,
-          ease: "easeInOut",
           repeat: Infinity,
-          repeatType: "loop",
           delay: 0.3,
           times: CHIP_KEYFRAME_TIMES,
         },
