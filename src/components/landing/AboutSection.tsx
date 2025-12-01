@@ -7,7 +7,7 @@ const aboutCardVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+    transition: { duration: 0.6 },
   },
 };
 
@@ -18,7 +18,6 @@ const aboutStatsVariants = {
     y: 0,
     transition: {
       duration: 0.7,
-      ease: "easeOut",
       delayChildren: 0.08,
       staggerChildren: 0.08,
     },
@@ -31,7 +30,7 @@ const statItemVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.35, ease: "easeOut" },
+    transition: { duration: 0.35 },
   },
 };
 
