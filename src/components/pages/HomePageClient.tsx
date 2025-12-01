@@ -2,6 +2,11 @@
 
 import { useEffect, useState, useMemo } from "react";
 import type { NewsArticle, NewsApiResponse } from "@/interfaces/news";
+import Navbar from "@/components/landing/Navbar";
+import HeroSection from "@/components/landing/HeroSection";
+import AboutSection from "@/components/landing/AboutSection";
+import TestimonialsSection from "@/components/landing/TestimonialsSection";
+import FooterSection from "@/components/landing/FooterSection";
 
 interface HomePageClientProps {
   initialArticles: NewsArticle[];
@@ -92,9 +97,15 @@ export default function HomePageClient({
       
       // Track the oldest article date for pagination
       if (newArticles.length > 0) {
-        const dates = newArticles.map((article) => new Date(article.publishedAt || Date.now()));
-        const oldestDate = new Date(Math.min(...dates.map((d) => d.getTime())));
-        setOldestArticleDate(oldestDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+        // Only consider articles that actually have a valid publishedAt date.
+        const validDates = newArticles
+          .map((article) => (article.publishedAt ? new Date(article.publishedAt) : null))
+          .filter((d): d is Date => d !== null && !isNaN(d.getTime()));
+
+        if (validDates.length > 0) {
+          const oldestDate = new Date(Math.min(...validDates.map((d) => d.getTime())));
+          setOldestArticleDate(oldestDate.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+        }
       }
       
       // Check if we have more articles
@@ -183,9 +194,22 @@ export default function HomePageClient({
   // Render
   // ----------------------------
   return (
-    <main>
-      {/* HTML structure removed - ready for rebuild */}
-    </main>
+    <div className="ds-page">
+      <Navbar />
+      <main className="ds-main">
+        <HeroSection
+          onPrimaryCtaClick={() => {
+            const el = document.getElementById("about");
+            if (el) {
+              el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }}
+        />
+        <AboutSection />
+        <TestimonialsSection />
+      </main>
+      <FooterSection />
+    </div>
   );
 }
 

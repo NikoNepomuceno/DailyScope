@@ -1,16 +1,16 @@
-import { Suspense } from 'react';
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import type { NewsArticle } from "@/interfaces/news";
 import { fetchNews } from "@/services/newsService";
 
-// Lazy load heavy components to reduce initial bundle size
-// Note: ssr: false removed as it's not allowed in Server Components
-// The component will still be code-split and lazy-loaded on the client
+// Lazy load heavy components to reduce initial bundle size.
+// HomePageClient is a client component imported into this server component.
+// We rely on Next.js to handle the client boundary; SSR disabling is not
+// supported in App Router server components.
 const HomePageClient = dynamic(
   () => import('@/components/pages/HomePageClient'),
-  { 
-    loading: () => <div className="loading">Loading DailyScope News...</div>
+  {
+    loading: () => <div className="loading">Loading DailyScope News...</div>,
   }
 );
 
@@ -117,11 +117,9 @@ export default async function HomePage() {
   const { articles, breakingHeadlines } = await getInitialNews();
 
   return (
-    <Suspense fallback={<div className="loading">Loading DailyScope News...</div>}>
-      <HomePageClient 
-        initialArticles={articles} 
-        initialBreakingHeadlines={breakingHeadlines} 
-      />
-    </Suspense>
+    <HomePageClient
+      initialArticles={articles}
+      initialBreakingHeadlines={breakingHeadlines}
+    />
   );
 }
