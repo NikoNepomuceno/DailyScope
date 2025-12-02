@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useState, useEffect, useRef } from "react";
 
 interface NavbarProps {
   onNavigate?: (sectionId: string) => void;
@@ -8,6 +8,38 @@ interface NavbarProps {
 
 export default function Navbar({ onNavigate }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLElement>(null);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        const toggleButton = document.querySelector('.ds-nav-toggle');
+        if (toggleButton && !toggleButton.contains(event.target as Node)) {
+          setIsOpen(false);
+        }
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside as any);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside as any);
+      };
+    }
+  }, [isOpen]);
 
   const handleNavClick = (
     event: MouseEvent<HTMLButtonElement>,
@@ -81,13 +113,25 @@ export default function Navbar({ onNavigate }: NavbarProps) {
         >
           <span className="ds-nav-toggle-bar" />
           <span className="ds-nav-toggle-bar" />
+          <span className="ds-nav-toggle-bar" />
         </button>
       </div>
 
+      {/* Mobile menu backdrop */}
+      {isOpen && (
+        <div
+          className="ds-nav-mobile-backdrop"
+          onClick={toggleMenu}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Mobile menu */}
       <nav
+        ref={menuRef}
         className={`ds-nav-mobile${isOpen ? " ds-nav-mobile-open" : ""}`}
         aria-label="Mobile primary navigation"
+        aria-hidden={!isOpen}
       >
         <NavButtons isMobile />
       </nav>
