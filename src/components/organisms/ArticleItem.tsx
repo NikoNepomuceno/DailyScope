@@ -1,48 +1,84 @@
 'use client';
 
-import { useState } from "react";
 import type { ArticleItemProps, NewsSource } from "@/interfaces/news";
+import Button from "@/components/atoms/Button";
+import styles from "./ArticleItem.module.css";
+import { Bookmark, ExternalLink } from "lucide-react";
 
 export default function ArticleItem({ article, isBookmarked, onToggleBookmark, fontSize }: ArticleItemProps) {
-  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return 'Recent';
     try {
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric', 
-        year: 'numeric' 
+      return new Date(dateString).toLocaleDateString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric'
       });
-    } catch {
-      return 'Recent';
-    }
+    } catch { return 'Recent'; }
   };
 
   const getSourceName = (source?: string | NewsSource) => {
-    if (!source) return null;
+    if (!source) return 'Unknown';
     if (typeof source === 'string') return source;
-    return source.name || source.id || 'Unknown Source';
-  };
-
-  const handleTextToSpeech = () => {
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-    } else {
-      const text = `${article.title}. ${article.description}`;
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.onend = () => setIsSpeaking(false);
-      window.speechSynthesis.speak(utterance);
-      setIsSpeaking(true);
-    }
+    return source.name;
   };
 
   return (
-    <article>
-      {/* HTML structure removed - ready for rebuild */}
+    <article className={styles.article}>
+      <div className={styles.imageWrapper}>
+        <img
+          src={
+            article.image ||
+            `https://placehold.co/600x400/e2e8f0/1e2b4b?text=DailyScope`
+          }
+          alt={article.title}
+          className={styles.image}
+          loading="lazy"
+        />
+      </div>
+
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <span className={styles.source}>{getSourceName(article.source)}</span>
+          <button
+            onClick={onToggleBookmark}
+            className={styles.bookmarkBtn}
+            aria-label={isBookmarked ? "Remove bookmark" : "Bookmark this article"}
+          >
+            <Bookmark fill={isBookmarked ? "currentColor" : "none"} size={20} />
+          </button>
+        </div>
+
+        <h3
+          className={styles.title}
+          style={{ fontSize: `${fontSize * 1.25}px` }}
+        >
+          <a
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {article.title}
+          </a>
+        </h3>
+
+        <p className={styles.description} style={{ fontSize: `${fontSize}px` }}>
+          {article.description}
+        </p>
+
+        <div className={styles.footer}>
+          <div className={styles.date}>
+            {formatDate(article.publishedAt)}
+          </div>
+          <a
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.readSource}
+          >
+            Read full story <ExternalLink size={14} />
+          </a>
+        </div>
+      </div>
     </article>
   );
 }
-

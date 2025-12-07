@@ -1,32 +1,46 @@
-'use client';
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import type { SearchBarProps } from "@/interfaces/news";
+import Button from "@/components/atoms/Button";
+import styles from "./SearchBar.module.css";
+import { Search } from "lucide-react";
 
-export default function SearchBar({ query, setQuery, onSearch }: SearchBarProps) {
+export default function SearchBar({
+  query,
+  setQuery,
+  onSearch,
+}: SearchBarProps) {
   const [isSticky, setIsSticky] = useState(false);
-  const searchContainerRef = useRef<HTMLDivElement>(null);
-
-  const clearSearch = () => {
-    setQuery("");
-  };
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (searchContainerRef.current) {
-        const rect = searchContainerRef.current.getBoundingClientRect();
-        setIsSticky(rect.top <= 0);
+      if (searchRef.current) {
+        setIsSticky(window.scrollY > 150);
       }
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <div ref={searchContainerRef}>
-      {/* HTML structure removed - ready for rebuild */}
+    <div
+      ref={searchRef}
+      className={`${styles.wrapper} ${isSticky ? styles.sticky : ""}`}
+    >
+      <form onSubmit={onSearch} className={styles.container}>
+        <input
+          type="text"
+          className={styles.input}
+          placeholder="Search topics, regions, or keywords..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <Button type="submit" variant="default">
+          <Search size={18} />
+          Search
+        </Button>
+      </form>
     </div>
   );
 }
-

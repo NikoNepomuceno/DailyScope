@@ -1,4 +1,4 @@
-'use client';
+import styles from "./TestimonialsSection.module.css";
 
 import { motion, type Variants } from "framer-motion";
 
@@ -74,7 +74,7 @@ export default function TestimonialsSection() {
         </motion.div>
 
         <motion.div
-          className="ds-testimonials-grid ds-fade-in"
+          className={`${styles.grid} ds-fade-in`}
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -83,18 +83,18 @@ export default function TestimonialsSection() {
           {testimonials.map((item) => (
             <motion.article
               key={item.name}
-              className="ds-testimonial-card"
+              className={styles.card}
               variants={cardVariants}
             >
-              <p className="ds-testimonial-quote">“{item.quote}”</p>
-              <div className="ds-testimonial-footer">
+              <p className={styles.quote}>“{item.quote}”</p>
+              <div className={styles.footer}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.7rem" }}>
-                  <div className="ds-avatar" aria-hidden="true">
+                  <div className={styles.avatar} aria-hidden="true">
                     {item.initials}
                   </div>
                   <div>
-                    <div className="ds-testimonial-name">{item.name}</div>
-                    <div className="ds-testimonial-role">{item.role}</div>
+                    <div className={styles.name}>{item.name}</div>
+                    <div className={styles.role}>{item.role}</div>
                   </div>
                 </div>
                 <span>★ ★ ★ ★ ★</span>

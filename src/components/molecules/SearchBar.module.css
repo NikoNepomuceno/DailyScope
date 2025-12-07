@@ -1,0 +1,67 @@
+.wrapper {
+    margin-bottom: 2rem;
+    height: 60px;
+    /* Reserve space to prevent layout shift */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sticky {
+    position: sticky;
+    top: 1.5rem;
+    z-index: 40;
+}
+
+.container {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--ds-white, #ffffff);
+    border: 1px solid var(--ds-border-subtle, #e2e8f0);
+    border-radius: 999px;
+    box-shadow: var(--ds-shadow-subtle, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 600px;
+    max-width: 90vw;
+}
+
+.sticky .container {
+    width: 850px;
+    /* Expand width when sticky */
+    max-width: 95vw;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--ds-shadow-soft, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+    border-color: rgba(39, 84, 228, 0.2);
+    transform: translateY(0);
+}
+
+[data-theme='dark'] .container {
+    background: var(--ds-surface, #1e293b);
+    border-color: var(--ds-border-subtle, #334155);
+}
+
+[data-theme='dark'] .sticky .container {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: var(--ds-text-primary, #0f172a);
+    outline: none;
+    min-width: 0;
+}
+
+[data-theme='dark'] .input {
+    color: var(--ds-text-primary-dark, #f1f5f9);
+}
+
+.input::placeholder {
+    color: var(--ds-text-muted, #94a3b8);
+}

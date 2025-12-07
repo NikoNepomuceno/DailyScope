@@ -1,12 +1,13 @@
-'use client';
+import styles from "./Navbar.module.css";
 
 import { MouseEvent, useState, useEffect, useRef } from "react";
 
 interface NavbarProps {
   onNavigate?: (sectionId: string) => void;
+  isSticky?: boolean;
 }
 
-export default function Navbar({ onNavigate }: NavbarProps) {
+export default function Navbar({ onNavigate, isSticky = true }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLElement>(null);
 
@@ -26,7 +27,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        const toggleButton = document.querySelector('.ds-nav-toggle');
+        const toggleButton = document.querySelector(`.${styles.navToggle}`);
         if (toggleButton && !toggleButton.contains(event.target as Node)) {
           setIsOpen(false);
         }
@@ -64,25 +65,25 @@ export default function Navbar({ onNavigate }: NavbarProps) {
   const NavButtons = ({ isMobile = false }: { isMobile?: boolean }) => (
     <>
       <button
-        className={isMobile ? "ds-nav-link ds-nav-link-mobile" : "ds-nav-link"}
+        className={isMobile ? `${styles.navLink} ${styles.mobileLink}` : styles.navLink}
         onClick={(e) => handleNavClick(e, "about")}
       >
         About
       </button>
       <button
-        className={isMobile ? "ds-nav-link ds-nav-link-mobile" : "ds-nav-link"}
+        className={isMobile ? `${styles.navLink} ${styles.mobileLink}` : styles.navLink}
         onClick={(e) => handleNavClick(e, "testimonials")}
       >
         Voices
       </button>
       <button
-        className={isMobile ? "ds-nav-link ds-nav-link-mobile" : "ds-nav-link"}
+        className={isMobile ? `${styles.navLink} ${styles.mobileLink}` : styles.navLink}
         onClick={(e) => handleNavClick(e, "footer")}
       >
         Contact
       </button>
       <button
-        className={isMobile ? "ds-nav-cta ds-nav-cta-mobile" : "ds-nav-cta"}
+        className={isMobile ? `${styles.cta} ${styles.mobileCta}` : styles.cta}
         onClick={(e) => handleNavClick(e, "hero")}
       >
         Start reading
@@ -91,36 +92,39 @@ export default function Navbar({ onNavigate }: NavbarProps) {
   );
 
   return (
-    <header className="ds-navbar">
-      <div className="ds-navbar-inner">
-        <div className="ds-logo">
-          <span className="ds-logo-mark">DS</span>
+    <header
+      className={styles.navbar}
+      style={{ position: isSticky ? 'sticky' : 'relative' }}
+    >
+      <div className={styles.inner}>
+        <div className={styles.logo}>
+          <span className={styles.logoMark}>DS</span>
           <span>DailyScope</span>
         </div>
 
         {/* Desktop navigation */}
-        <nav className="ds-nav-links" aria-label="Primary navigation">
+        <nav className={styles.navLinks} aria-label="Primary navigation">
           <NavButtons />
         </nav>
 
         {/* Mobile toggle button */}
         <button
           type="button"
-          className="ds-nav-toggle"
+          className={styles.navToggle}
           aria-label="Toggle navigation menu"
           aria-expanded={isOpen}
           onClick={toggleMenu}
         >
-          <span className="ds-nav-toggle-bar" />
-          <span className="ds-nav-toggle-bar" />
-          <span className="ds-nav-toggle-bar" />
+          <span className={styles.navToggleBar} />
+          <span className={styles.navToggleBar} />
+          <span className={styles.navToggleBar} />
         </button>
       </div>
 
       {/* Mobile menu backdrop */}
       {isOpen && (
         <div
-          className="ds-nav-mobile-backdrop"
+          className={styles.mobileBackdrop}
           onClick={toggleMenu}
           aria-hidden="true"
         />
@@ -129,7 +133,7 @@ export default function Navbar({ onNavigate }: NavbarProps) {
       {/* Mobile menu */}
       <nav
         ref={menuRef}
-        className={`ds-nav-mobile${isOpen ? " ds-nav-mobile-open" : ""}`}
+        className={`${styles.mobileMenu}${isOpen ? ` ${styles.mobileMenuOpen}` : ""}`}
         aria-label="Mobile primary navigation"
         aria-hidden={!isOpen}
       >

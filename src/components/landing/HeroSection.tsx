@@ -1,4 +1,5 @@
-'use client';
+import styles from "./HeroSection.module.css";
+import Link from "next/link";
 
 import { useEffect } from "react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
@@ -14,7 +15,7 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
   const heroInitial = prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 };
   const heroAnimate = { opacity: 1, y: 0 };
 
-   // Looping animation config for hero chips & pill
+  // Looping animation config for hero chips & pill
   const CHIP_LOOP_DURATION = 2.4; // seconds
   const CHIP_KEYFRAME_TIMES = [0, 0.25, 0.75, 1]; // includes ~1.2s plateau
 
@@ -26,15 +27,15 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
     prefersReducedMotion
       ? { opacity: 1, x: 0 }
       : {
-          opacity: [0, 1, 1, 0],
-          x: [24, 0, 0, -12],
-          transition: {
-            duration: CHIP_LOOP_DURATION,
-            repeat: Infinity,
-            delay: index * 0.4,
-            times: CHIP_KEYFRAME_TIMES,
-          },
-        };
+        opacity: [0, 1, 1, 0],
+        x: [24, 0, 0, -12],
+        transition: {
+          duration: CHIP_LOOP_DURATION,
+          repeat: Infinity,
+          delay: index * 0.4,
+          times: CHIP_KEYFRAME_TIMES,
+        },
+      };
 
   const pillInitial = prefersReducedMotion
     ? { opacity: 1, x: 0 }
@@ -42,15 +43,15 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
   const pillAnimate = prefersReducedMotion
     ? { opacity: 1, x: 0 }
     : {
-        opacity: [0, 1, 1, 0],
-        x: [-24, 0, 0, 12],
-        transition: {
-          duration: CHIP_LOOP_DURATION,
-          repeat: Infinity,
-          delay: 0.3,
-          times: CHIP_KEYFRAME_TIMES,
-        },
-      };
+      opacity: [0, 1, 1, 0],
+      x: [-24, 0, 0, 12],
+      transition: {
+        duration: CHIP_LOOP_DURATION,
+        repeat: Infinity,
+        delay: 0.3,
+        times: CHIP_KEYFRAME_TIMES,
+      },
+    };
 
   // Headline configuration for per-letter animation
   const headlineParts = [
@@ -112,8 +113,8 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
   }, [letterControls, prefersReducedMotion, totalLetters]);
 
   return (
-    <section id="hero" className="ds-hero">
-      <div className="ds-hero-inner">
+    <section id="hero" className={styles.hero}>
+      <div className={styles.inner}>
         <motion.div
           className="ds-fade-in"
           initial={heroInitial}
@@ -124,9 +125,9 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
             ease: "easeOut",
           }}
         >
-          <p className="ds-hero-eyebrow">Your daily window to the world</p>
-          <h1 className="ds-hero-title">
-            <span className="ds-hero-title-letters">
+          <p className={styles.eyebrow}>Your daily window to the world</p>
+          <h1 className={styles.title}>
+            <span className={styles.titleLetters}>
               {(() => {
                 let runningIndex = 0;
 
@@ -142,7 +143,7 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
                       return (
                         <motion.div
                           key={`space-${partIndex}-${tokenIndex}`}
-                          className="ds-hero-letter ds-hero-letter-space"
+                          className={`${styles.letter} ${styles.letterSpace}`}
                           custom={indexForSpace}
                           initial={
                             prefersReducedMotion
@@ -166,16 +167,15 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
                     return (
                       <span
                         key={`word-${partIndex}-${tokenIndex}`}
-                        className={`ds-hero-word${
-                          part.highlight ? " ds-hero-letter-highlight" : ""
-                        }`}
+                        className={`${styles.word}${part.highlight ? ` ${styles.letterHighlight}` : ""
+                          }`}
                       >
                         {letters.map((char, charIndex) => {
                           const globalIndex = runningIndex++;
                           return (
                             <motion.div
                               key={`${partIndex}-${tokenIndex}-${charIndex}`}
-                              className="ds-hero-letter"
+                              className={styles.letter}
                               custom={globalIndex}
                               initial={
                                 prefersReducedMotion
@@ -199,18 +199,18 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
               })()}
             </span>
           </h1>
-          <p className="ds-hero-subtitle">
+          <p className={styles.subtitle}>
             DailyScope cuts through the noise to deliver balanced, human‑curated stories
             across technology, business, science, and world events — in minutes, not hours.
           </p>
 
-          <div className="ds-hero-cta-row">
-            <button
+          <div className={styles.ctaRow}>
+            <Link
+              href="/news"
               className="ds-button-primary"
-              onClick={onPrimaryCtaClick}
             >
               Start reading now
-            </button>
+            </Link>
             <button
               className="ds-button-ghost"
               onClick={() => {
@@ -224,24 +224,24 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
             </button>
           </div>
 
-          <div className="ds-hero-meta" aria-label="Key product highlights">
-            <div className="ds-hero-meta-item">
-              <span className="ds-hero-meta-label">Tracked sources</span>
-              <span className="ds-hero-meta-value">+2,500 outlets</span>
+          <div className={styles.meta} aria-label="Key product highlights">
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Tracked sources</span>
+              <span className={styles.metaValue}>+2,500 outlets</span>
             </div>
-            <div className="ds-hero-meta-item">
-              <span className="ds-hero-meta-label">Fresh coverage</span>
-              <span className="ds-hero-meta-value">Every 60 seconds</span>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Fresh coverage</span>
+              <span className={styles.metaValue}>Every 60 seconds</span>
             </div>
-            <div className="ds-hero-meta-item">
-              <span className="ds-hero-meta-label">Made for focus</span>
-              <span className="ds-hero-meta-value">No clutter. Just context.</span>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Made for focus</span>
+              <span className={styles.metaValue}>No clutter. Just context.</span>
             </div>
           </div>
         </motion.div>
 
         <motion.div
-          className="ds-hero-visual ds-fade-in"
+          className={`${styles.visual} ds-fade-in`}
           initial={prefersReducedMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.5 }}
@@ -251,44 +251,44 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
             delay: prefersReducedMotion ? 0 : 0.12,
           }}
         >
-          <div className="ds-hero-card">
-            <div className="ds-hero-card-header">
-              <span className="ds-hero-card-tag">Today’s Briefing</span>
-              <span className="ds-hero-card-pulse">
-                <span className="ds-dot" aria-hidden="true" />
+          <div className={styles.card}>
+            <div className={styles.cardHeader}>
+              <span className={styles.cardTag}>Today’s Briefing</span>
+              <span className={styles.cardPulse}>
+                <span className={styles.dot} aria-hidden="true" />
                 Live
               </span>
             </div>
-            <h2 className="ds-hero-card-headline">
+            <h2 className={styles.cardHeadline}>
               Markets, tech, and climate — the 7 stories shaping your day.
             </h2>
-            <div className="ds-hero-card-meta">
+            <div className={styles.cardMeta}>
               <span>Curated by DailyScope editors</span>
               <span>Updated 3 min ago</span>
             </div>
-            <div className="ds-hero-card-footer">
+            <div className={styles.cardFooter}>
               <span>Tap into a personalized, bias-aware news feed.</span>
               <span>↗</span>
             </div>
           </div>
 
-          <div className="ds-hero-chip-row">
+          <div className={styles.chipRow}>
             <motion.div
-              className="ds-hero-chip"
+              className={styles.chip}
               initial={chipInitial}
               animate={chipAnimate(0)}
             >
               💼 Business & Markets
             </motion.div>
             <motion.div
-              className="ds-hero-chip"
+              className={styles.chip}
               initial={chipInitial}
               animate={chipAnimate(1)}
             >
               🔬 Science & Health
             </motion.div>
             <motion.div
-              className="ds-hero-chip"
+              className={styles.chip}
               initial={chipInitial}
               animate={chipAnimate(2)}
             >
@@ -297,11 +297,11 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
           </div>
 
           <motion.div
-            className="ds-hero-pill"
+            className={styles.pill}
             initial={pillInitial}
             animate={pillAnimate}
           >
-            <span className="ds-hero-pill-badge">New</span>
+            <span className={styles.pillBadge}>New</span>
             <span>Accessibility‑first reading controls</span>
           </motion.div>
         </motion.div>

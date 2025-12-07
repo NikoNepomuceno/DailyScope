@@ -1,0 +1,42 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--ds-radius-full);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    gap: 0.5rem;
+}
+
+.button:active {
+    transform: translateY(1px);
+}
+
+.default {
+    background-color: var(--ds-royal-blue);
+    color: var(--ds-white);
+    border: 1px solid transparent;
+    box-shadow: 0 4px 12px rgba(39, 84, 228, 0.25);
+}
+
+.default:hover {
+    background-color: #1e45c7;
+    /* slightly darker royal blue */
+    box-shadow: 0 6px 16px rgba(39, 84, 228, 0.35);
+}
+
+.outline {
+    background-color: transparent;
+    color: var(--ds-text-primary);
+    border: 1px solid var(--ds-border-subtle);
+}
+
+.outline:hover {
+    background-color: rgba(7, 31, 42, 0.04);
+    /* subtle hover state */
+    border-color: var(--ds-text-muted);
+}

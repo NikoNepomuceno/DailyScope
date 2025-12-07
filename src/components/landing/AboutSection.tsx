@@ -1,4 +1,4 @@
-'use client';
+import styles from "./AboutSection.module.css";
 
 import { motion } from "framer-motion";
 
@@ -55,73 +55,73 @@ export default function AboutSection() {
           </p>
         </motion.div>
 
-        <div className="ds-about-grid">
+        <div className={styles.grid}>
           <motion.div
-            className="ds-about-card ds-fade-in"
+            className={`${styles.card} ds-fade-in`}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.35 }}
             variants={aboutCardVariants}
           >
-            <div className="ds-about-pill">
-              <span className="ds-dot-muted" />
+            <div className={styles.pill}>
+              <span className={styles.dotMuted} />
               Human‑curated, latest headlines
             </div>
-            <p className="ds-about-body">
+            <p className={styles.body}>
               Behind every briefing is clear editorial judgement. We aggregate thousands of
               sources, surface what matters, and filter out the duplicate, the trivial, and
               the sensational — so every scroll feels intentional and up to date.
             </p>
-            <div className="ds-about-list">
-              <div className="ds-about-list-item">
-                <span className="ds-check">✓</span>
+            <div className={styles.list}>
+              <div className={styles.listItem}>
+                <span className={styles.check}>✓</span>
                 <span>Balanced coverage from global, local, and specialist outlets.</span>
               </div>
-              <div className="ds-about-list-item">
-                <span className="ds-check">✓</span>
+              <div className={styles.listItem}>
+                <span className={styles.check}>✓</span>
                 <span>Smart topics from tech and markets to culture and climate.</span>
               </div>
-              <div className="ds-about-list-item">
-                <span className="ds-check">✓</span>
+              <div className={styles.listItem}>
+                <span className={styles.check}>✓</span>
                 <span>Reader controls for font size, dark mode, and audio briefings.</span>
               </div>
-              <div className="ds-about-list-item">
-                <span className="ds-check">✓</span>
+              <div className={styles.listItem}>
+                <span className={styles.check}>✓</span>
                 <span>Designed for clarity, with strong hierarchy and zero clutter.</span>
               </div>
             </div>
           </motion.div>
 
           <motion.div
-            className="ds-about-stats ds-fade-in"
+            className={`${styles.stats} ds-fade-in`}
             variants={aboutStatsVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <motion.div className="ds-about-stat" variants={statItemVariants}>
-              <p className="ds-about-stat-label">Stories scanned / day</p>
-              <p className="ds-about-stat-value">+50k</p>
+            <motion.div className={styles.stat} variants={statItemVariants}>
+              <p className={styles.statLabel}>Stories scanned / day</p>
+              <p className={styles.statValue}>+50k</p>
             </motion.div>
-            <motion.div className="ds-about-stat" variants={statItemVariants}>
-              <p className="ds-about-stat-label">Avg. briefing time</p>
-              <p className="ds-about-stat-value">7 min</p>
+            <motion.div className={styles.stat} variants={statItemVariants}>
+              <p className={styles.statLabel}>Avg. briefing time</p>
+              <p className={styles.statValue}>7 min</p>
             </motion.div>
-            <motion.div className="ds-about-stat" variants={statItemVariants}>
-              <p className="ds-about-stat-label">Reader satisfaction</p>
-              <p className="ds-about-stat-value">4.9/5</p>
+            <motion.div className={styles.stat} variants={statItemVariants}>
+              <p className={styles.statLabel}>Reader satisfaction</p>
+              <p className={styles.statValue}>4.9/5</p>
             </motion.div>
-            <motion.div className="ds-about-stat" variants={statItemVariants}>
-              <p className="ds-about-stat-label">Regions covered</p>
-              <p className="ds-about-stat-value">190+</p>
+            <motion.div className={styles.stat} variants={statItemVariants}>
+              <p className={styles.statLabel}>Regions covered</p>
+              <p className={styles.statValue}>190+</p>
             </motion.div>
-            <motion.div className="ds-about-stat" variants={statItemVariants}>
-              <p className="ds-about-stat-label">Topics tracked</p>
-              <p className="ds-about-stat-value">25+</p>
+            <motion.div className={styles.stat} variants={statItemVariants}>
+              <p className={styles.statLabel}>Topics tracked</p>
+              <p className={styles.statValue}>25+</p>
             </motion.div>
-            <motion.div className="ds-about-stat" variants={statItemVariants}>
-              <p className="ds-about-stat-label">Updates / hour</p>
-              <p className="ds-about-stat-value">60</p>
+            <motion.div className={styles.stat} variants={statItemVariants}>
+              <p className={styles.statLabel}>Updates / hour</p>
+              <p className={styles.statValue}>60</p>
             </motion.div>
           </motion.div>
         </div>
