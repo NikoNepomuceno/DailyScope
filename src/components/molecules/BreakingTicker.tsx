@@ -78,9 +78,6 @@ export default function BreakingTicker({ articles }: BreakingTickerProps) {
             >
               Read Full Story <span className={styles.arrowIcon}>→</span>
             </a>
-            <button className={styles.secondaryButton}>
-              Watch Live
-            </button>
           </div>
 
           {/* Navigation Controls */}

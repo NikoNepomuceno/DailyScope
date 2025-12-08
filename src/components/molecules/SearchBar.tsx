@@ -36,7 +36,7 @@ export default function SearchBar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <Button type="submit" variant="default">
+        <Button type="submit" variant="default" className={styles.searchBtn}>
           <Search size={18} />
           Search
         </Button>

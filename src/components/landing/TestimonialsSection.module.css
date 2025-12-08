@@ -33,7 +33,7 @@
     width: clamp(38px, 4vh, 44px);
     height: clamp(38px, 4vh, 44px);
     border-radius: 999px;
-    background: linear-gradient(135deg, #f9a60f, #dc4222);
+    background: var(--ds-amber-orange);
     display: inline-flex;
     align-items: center;
     justify-content: center;

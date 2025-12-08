@@ -35,11 +35,7 @@
     }
 }
 
-@media (min-width: 1280px) {
-    .grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
+/* Removed 4-column layout for larger screens to enforce 3-column max */
 
 .empty {
     text-align: center;

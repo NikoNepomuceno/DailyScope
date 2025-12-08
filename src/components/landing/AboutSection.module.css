@@ -43,12 +43,13 @@
     display: inline-flex;
     padding: clamp(0.45rem, 1vh, 0.65rem) clamp(0.9rem, 1.8vh, 1.2rem);
     border-radius: 999px;
-    background-color: rgba(39, 84, 228, 0.06);
-    color: var(--ds-royal-blue);
+    background-color: var(--ds-off-white);
+    color: var(--ds-deep-navy);
     font-size: clamp(0.75rem, 1.4vh, 0.9rem);
-    font-weight: 500;
+    font-weight: 600;
     gap: clamp(0.4rem, 0.8vh, 0.6rem);
     align-items: center;
+    border: 1px solid var(--ds-border-subtle);
 }
 
 .body {
@@ -77,12 +78,13 @@
     width: 14px;
     height: 14px;
     border-radius: 999px;
-    background-color: rgba(39, 84, 228, 0.08);
+    background-color: var(--ds-off-white);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--ds-royal-blue);
+    color: var(--ds-deep-navy);
     font-size: 0.7rem;
+    border: 1px solid var(--ds-border-subtle);
 }
 
 @media (max-width: 900px) {
@@ -105,9 +107,10 @@
         padding: clamp(0.85rem, 1.8vh, 1.2rem) clamp(0.9rem, 2vh, 1.3rem);
     }
 }
+
 .dotMuted {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background-color: var(--ds-light-grey);
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background-color: var(--ds-light-grey);
 }

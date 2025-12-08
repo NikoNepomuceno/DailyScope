@@ -3,7 +3,7 @@
 import type { ArticleItemProps, NewsSource } from "@/interfaces/news";
 import Button from "@/components/atoms/Button";
 import styles from "./ArticleItem.module.css";
-import { Bookmark, ExternalLink } from "lucide-react";
+// import { Bookmark } from "lucide-react";
 
 export default function ArticleItem({ article, isBookmarked, onToggleBookmark, fontSize }: ArticleItemProps) {
 
@@ -17,10 +17,13 @@ export default function ArticleItem({ article, isBookmarked, onToggleBookmark, f
   };
 
   const getSourceName = (source?: string | NewsSource) => {
-    if (!source) return 'Unknown';
+    // If we have a source, use it as the "Category" for now since we lack category data
+    if (!source) return 'General';
     if (typeof source === 'string') return source;
     return source.name;
   };
+
+  const readTime = "5 min read"; // Placeholder since API doesn't provide this
 
   return (
     <article className={styles.article}>
@@ -34,23 +37,15 @@ export default function ArticleItem({ article, isBookmarked, onToggleBookmark, f
           className={styles.image}
           loading="lazy"
         />
+        <span className={styles.categoryPill}>
+          {getSourceName(article.source)}
+        </span>
       </div>
 
       <div className={styles.content}>
-        <div className={styles.header}>
-          <span className={styles.source}>{getSourceName(article.source)}</span>
-          <button
-            onClick={onToggleBookmark}
-            className={styles.bookmarkBtn}
-            aria-label={isBookmarked ? "Remove bookmark" : "Bookmark this article"}
-          >
-            <Bookmark fill={isBookmarked ? "currentColor" : "none"} size={20} />
-          </button>
-        </div>
-
         <h3
           className={styles.title}
-          style={{ fontSize: `${fontSize * 1.25}px` }}
+          style={{ fontSize: `${fontSize * 1.5}px` }} // Increased scale for impact
         >
           <a
             href={article.url}
@@ -66,17 +61,8 @@ export default function ArticleItem({ article, isBookmarked, onToggleBookmark, f
         </p>
 
         <div className={styles.footer}>
-          <div className={styles.date}>
-            {formatDate(article.publishedAt)}
-          </div>
-          <a
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.readSource}
-          >
-            Read full story <ExternalLink size={14} />
-          </a>
+          <span className={styles.date}>{formatDate(article.publishedAt)}</span>
+          <span>{readTime}</span>
         </div>
       </div>
     </article>

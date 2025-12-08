@@ -1,13 +1,14 @@
 .page {
     min-height: 100vh;
-    background-color: var(--ds-surface-light, #f8fafc);
-    color: var(--ds-text-primary, #0f172a);
+    background-color: var(--ds-off-white);
+    color: var(--ds-deep-navy);
 }
 
 [data-theme='dark'] .page {
-    background-color: var(--ds-surface-dark, #0f172a);
-    color: var(--ds-text-primary-dark, #f1f5f9);
+    background-color: var(--ds-deep-navy);
+    color: var(--ds-white);
 }
+
 
 .main {
     position: relative;
@@ -16,44 +17,64 @@
 
 .shell {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
+    /* Wider for 3 columns */
     margin: 0 auto;
-    padding: 4rem 1.5rem;
+    padding: 3rem 2rem;
 }
 
 .header {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 4rem;
+    width: 100%;
+    margin-bottom: 2rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.featuredLabel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--ds-red-orange);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.featuredLabel::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background-color: var(--ds-red-orange);
+}
+
+
+.headlineRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
 }
 
 .title {
     font-size: 3.5rem;
     font-weight: 800;
     line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 1rem;
-    background-image: linear-gradient(135deg, var(--ds-text-heading, #0f172a) 0%, var(--ds-primary, #3b82f6) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--ds-deep-navy);
+    margin: 0;
+}
+
+.titleHighlight {
+    font-style: italic;
+    color: var(--ds-amber-orange);
+    font-weight: 700;
 }
 
 [data-theme='dark'] .title {
-    background-image: linear-gradient(135deg, #f8fafc 0%, #60a5fa 100%);
-}
-
-.subtitle {
-    font-size: 1.25rem;
-    color: var(--ds-text-body, #64748b);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
-[data-theme='dark'] .subtitle {
-    color: #94a3b8;
+    color: #f8fafc;
 }
 
 .content {

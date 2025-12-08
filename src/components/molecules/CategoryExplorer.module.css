@@ -1,0 +1,181 @@
+.section {
+    padding: 5rem 0;
+    background-color: var(--ds-page-bg);
+    /* Should match the page background, likely off-white */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ds-amber-orange, #f9a60f);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.eyebrowLine {
+    width: 20px;
+    height: 3px;
+    background-color: var(--ds-amber-orange, #f9a60f);
+    border-radius: 2px;
+}
+
+.title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    color: var(--ds-deep-navy, #071f2a);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.titleAccent {
+    font-style: italic;
+    color: var(--ds-amber-orange, #f9a60f);
+    font-weight: 400;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Force 4 columns */
+    gap: 1.5rem;
+    max-width: var(--ds-layout-max-width, 1600px);
+    /* Expand width to fit 4 cols comfortably */
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    position: relative;
+    height: 320px;
+    /* Taller cards */
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: block;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.cardBackground {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Fallback Gradients if images fail */
+.bgWorld {
+    background-image: url('/images/world.png');
+    /* Priority to image */
+    background-color: #1e40af;
+}
+
+.bgPolitics {
+    background-image: url('/images/politics.png');
+    background-color: #475569;
+}
+
+.bgBusiness {
+    background: #0ea5e9;
+}
+
+.bgTech {
+    background: #0891b2;
+}
+
+.card:hover .cardBackground {
+    transform: scale(1.1);
+}
+
+/* Overlay solid for text readability (no gradients) */
+.cardOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.cardContent {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.75rem;
+    color: white;
+}
+
+.cardTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+    /* Add serif to match design if desired, or keep sans */
+}
+
+.cardCount {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+.arrowIcon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 36px;
+    height: 36px;
+    background: var(--ds-amber-orange, #f9a60f);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transform: translate(-10px, 10px);
+    transition: all 0.3s ease;
+}
+
+.card:hover .arrowIcon {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+
+/* Dark Mode Overrides */
+[data-theme='dark'] .section {
+    background-color: var(--ds-page-bg);
+}
+
+[data-theme='dark'] .title {
+    color: var(--ds-white);
+}

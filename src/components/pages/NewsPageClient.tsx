@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import type { NewsArticle } from "@/interfaces/news";
 import FooterSection from "@/components/landing/FooterSection";
 import BreakingTicker from "@/components/molecules/BreakingTicker";
+import CategoryExplorer from "@/components/molecules/CategoryExplorer";
 import SearchBar from "@/components/molecules/SearchBar";
 import Toolbar from "@/components/organisms/Toolbar";
 import ArticleList from "@/components/organisms/ArticleList";
+import { ArrowRight } from "lucide-react";
 
 interface NewsPageClientProps {
   initialArticles: NewsArticle[];
@@ -100,13 +102,18 @@ export default function NewsPageClient({
 
 
       <BreakingTicker articles={breakingArticles} />
+      <CategoryExplorer />
 
       <main className={styles.main}>
         <div className={styles.shell}>
 
           <header className={styles.header}>
-            <h1 className={styles.title}>Latest Visual Briefings</h1>
-            <p className={styles.subtitle}>Real-time briefings from across the globe, curated for clarity and depth.</p>
+            <div className={styles.featuredLabel}>Featured Stories</div>
+            <div className={styles.headlineRow}>
+              <h1 className={styles.title}>
+                Today&apos;s <span className={styles.titleHighlight}>Top Headlines</span>
+              </h1>
+            </div>
           </header>
 
           <Toolbar

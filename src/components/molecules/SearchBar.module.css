@@ -19,11 +19,11 @@
     padding: 0.75rem 1rem;
     background: var(--ds-white, #ffffff);
     border: 1px solid var(--ds-border-subtle, #e2e8f0);
-    border-radius: 999px;
-    box-shadow: var(--ds-shadow-subtle, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    width: 600px;
-    max-width: 90vw;
+    width: 100%;
+    max-width: 600px;
 }
 
 .sticky .container {
@@ -64,4 +64,14 @@
 
 .input::placeholder {
     color: var(--ds-text-muted, #94a3b8);
+}
+
+.searchBtn {
+    background-color: var(--ds-orange-600, #ea580c) !important;
+    /* Force override of default button style */
+    border-color: var(--ds-orange-600, #ea580c) !important;
+}
+
+.searchBtn:hover {
+    background-color: var(--ds-orange-700, #c2410c) !important;
 }
