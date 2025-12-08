@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import type { NewsArticle } from "@/interfaces/news";
-import Navbar from "@/components/landing/Navbar";
 import FooterSection from "@/components/landing/FooterSection";
 import BreakingTicker from "@/components/molecules/BreakingTicker";
 import SearchBar from "@/components/molecules/SearchBar";
@@ -11,7 +10,7 @@ import ArticleList from "@/components/organisms/ArticleList";
 
 interface NewsPageClientProps {
   initialArticles: NewsArticle[];
-  initialBreakingHeadlines: string[];
+  initialBreakingArticles: NewsArticle[];
 }
 
 import styles from "./NewsPage.module.css";
@@ -20,11 +19,11 @@ import styles from "./NewsPage.module.css";
 
 export default function NewsPageClient({
   initialArticles,
-  initialBreakingHeadlines
+  initialBreakingArticles
 }: NewsPageClientProps) {
 
   const [articles, setArticles] = useState<NewsArticle[]>(initialArticles);
-  const [breakingHeadlines] = useState<string[]>(initialBreakingHeadlines);
+  const [breakingArticles] = useState<NewsArticle[]>(initialBreakingArticles);
   const [query, setQuery] = useState("");
   const [bookmarks, setBookmarks] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(false);
@@ -97,9 +96,10 @@ export default function NewsPageClient({
 
   return (
     <div className={styles.page}>
-      <Navbar isSticky={false} />
 
-      <BreakingTicker headlines={breakingHeadlines} />
+
+
+      <BreakingTicker articles={breakingArticles} />
 
       <main className={styles.main}>
         <div className={styles.shell}>
@@ -128,7 +128,7 @@ export default function NewsPageClient({
               </div>
             ) : (
               <ArticleList
-                articles={articles}
+                articles={articles.filter(a => !breakingArticles.some(b => b.title === a.title))}
                 bookmarks={bookmarks}
                 toggleBookmark={toggleBookmark}
                 fontSize={fontSize}

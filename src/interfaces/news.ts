@@ -53,7 +53,7 @@ export interface SearchBarProps {
 }
 
 export interface BreakingTickerProps {
-  headlines: string[];
+  articles: NewsArticle[];
 }
 
 export interface ToolbarProps {

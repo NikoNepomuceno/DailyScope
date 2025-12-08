@@ -11,16 +11,17 @@ const NewsPageClient = dynamic(
     }
 );
 
-async function getInitialNews(): Promise<{ articles: NewsArticle[]; breakingHeadlines: string[] }> {
+async function getInitialNews(): Promise<{ articles: NewsArticle[]; breakingArticles: NewsArticle[] }> {
     try {
         const data = await fetchNews({ topic: 'general' });
-        const articles = data.articles || [];
-        const breakingHeadlines = articles.slice(0, 5).map((a) => a.title);
+        const allArticles = data.articles || [];
+        const breakingArticles = allArticles.slice(0, 5);
+        const articles = allArticles.slice(5);
 
-        return { articles, breakingHeadlines };
+        return { articles, breakingArticles };
     } catch (error) {
         console.error('Error fetching initial news:', error);
-        return { articles: [], breakingHeadlines: [] };
+        return { articles: [], breakingArticles: [] };
     }
 }
 
@@ -32,12 +33,12 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function NewsPage() {
-    const { articles, breakingHeadlines } = await getInitialNews();
+    const { articles, breakingArticles } = await getInitialNews();
 
     return (
         <NewsPageClient
             initialArticles={articles}
-            initialBreakingHeadlines={breakingHeadlines}
+            initialBreakingArticles={breakingArticles}
         />
     );
 }
