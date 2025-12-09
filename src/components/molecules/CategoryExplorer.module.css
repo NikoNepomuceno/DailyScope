@@ -105,11 +105,13 @@
 }
 
 .bgBusiness {
-    background: #0ea5e9;
+    background-image: url('/images/Business.png');
+    background-color: #0ea5e9;
 }
 
 .bgTech {
-    background: #0891b2;
+    background-image: url('/images/Technology.png');
+    background-color: #0891b2;
 }
 
 .card:hover .cardBackground {

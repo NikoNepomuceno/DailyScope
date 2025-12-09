@@ -2,6 +2,8 @@ import styles from "./Navbar.module.css";
 
 import { MouseEvent, useState, useEffect, useRef } from "react";
 
+import Image from "next/image";
+
 interface NavbarProps {
   onNavigate?: (sectionId: string) => void;
   isSticky?: boolean;
@@ -82,12 +84,6 @@ export default function Navbar({ onNavigate, isSticky = true }: NavbarProps) {
       >
         Contact
       </button>
-      <button
-        className={isMobile ? `${styles.cta} ${styles.mobileCta}` : styles.cta}
-        onClick={(e) => handleNavClick(e, "hero")}
-      >
-        Start reading
-      </button>
     </>
   );
 
@@ -98,8 +94,15 @@ export default function Navbar({ onNavigate, isSticky = true }: NavbarProps) {
     >
       <div className={styles.inner}>
         <div className={styles.logo}>
-          <span className={styles.logoMark}>DS</span>
-          <span>DailyScope</span>
+          <Image
+            src="/images/DailyScopeLogo.png"
+            alt="DailyScope"
+            width={280}
+            height={66}
+            priority
+            className={styles.logoImage}
+            style={{ width: 'auto', height: '66px' }}
+          />
         </div>
 
         {/* Desktop navigation */}

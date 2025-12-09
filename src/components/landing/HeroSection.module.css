@@ -189,8 +189,9 @@
 .chipRow {
     position: absolute;
     inset-inline: auto 0;
+    margin-right: clamp(-2rem, -3vw, -3.5rem);
     top: 8%;
-    right: clamp(-2rem, -3vw, -3.5rem);
+    /* right: clamp(-2rem, -3vw, -3.5rem); */
     display: flex;
     flex-direction: column;
     gap: clamp(1rem, 2.2vh, 1.5rem);

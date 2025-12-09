@@ -211,17 +211,6 @@ export default function HeroSection({ onPrimaryCtaClick }: HeroSectionProps) {
             >
               Start reading now
             </Link>
-            <button
-              className="ds-button-ghost"
-              onClick={() => {
-                const el = document.getElementById("about");
-                if (el) {
-                  el.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-              }}
-            >
-              How DailyScope works
-            </button>
           </div>
 
           <div className={styles.meta} aria-label="Key product highlights">

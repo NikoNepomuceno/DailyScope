@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Montserrat } from "next/font/google";
+import { Geist, Geist_Mono, Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
+  subsets: ["latin"],
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
 });
 
@@ -62,7 +67,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${montserrat.variable} ${playfair.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
           {children}

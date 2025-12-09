@@ -1,116 +1,185 @@
-.grid {
+.contentGrid {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.1fr);
-    gap: clamp(3.5rem, 8vh, 6rem);
-    align-items: center;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+    gap: clamp(3rem, 6vh, 5rem);
+    align-items: start;
 }
 
-.card {
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.5rem, 5vh, 3.5rem);
+}
+
+.quoteBlock {
+    border-left: 3px solid var(--ds-amber-orange);
+    padding-left: clamp(1.25rem, 2.5vh, 2rem);
+    font-size: clamp(1.1rem, 2.2vh, 1.35rem);
+    line-height: 1.5;
+    color: var(--ds-deep-navy);
+    font-family: var(--font-montserrat), var(--font-geist-sans), sans-serif;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.standardCard {
     background-color: var(--ds-white);
     border-radius: var(--ds-radius-lg);
-    padding: clamp(2rem, 4vh, 2.75rem) clamp(2rem, 3.5vw, 2.5rem);
+    padding: clamp(2rem, 4vh, 2.5rem);
     border: 1px solid var(--ds-border-subtle);
     box-shadow: var(--ds-shadow-subtle);
 }
 
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(1.5rem, 3vh, 2.25rem);
-    margin-top: clamp(2rem, 4vh, 3rem);
-}
-
-.stat {
-    padding: clamp(1rem, 2.2vh, 1.4rem) clamp(1.1rem, 2.5vh, 1.5rem);
-    border-radius: clamp(14px, 2vh, 20px);
-    background-color: var(--ds-off-white);
-}
-
-.statLabel {
-    font-size: clamp(0.7rem, 1.3vh, 0.85rem);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ds-text-muted);
-    margin-bottom: clamp(0.35rem, 0.8vh, 0.5rem);
-}
-
-.statValue {
-    font-size: clamp(1.1rem, 2.5vh, 1.5rem);
-    font-weight: 600;
-}
-
-.pill {
-    display: inline-flex;
-    padding: clamp(0.45rem, 1vh, 0.65rem) clamp(0.9rem, 1.8vh, 1.2rem);
-    border-radius: 999px;
-    background-color: var(--ds-off-white);
+.cardTitle {
+    font-family: var(--font-montserrat), var(--font-geist-sans), sans-serif;
+    font-size: clamp(1.2rem, 2.5vh, 1.4rem);
+    margin-bottom: 1.5rem;
     color: var(--ds-deep-navy);
-    font-size: clamp(0.75rem, 1.4vh, 0.9rem);
     font-weight: 600;
-    gap: clamp(0.4rem, 0.8vh, 0.6rem);
-    align-items: center;
-    border: 1px solid var(--ds-border-subtle);
-}
-
-.body {
-    margin-top: clamp(1.5rem, 3.5vh, 2.25rem);
-    font-size: clamp(0.95rem, 1.8vh, 1.1rem);
-    color: var(--ds-text-muted);
-    line-height: 1.75;
 }
 
 .list {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(1rem, 2.2vh, 1.4rem) clamp(1.3rem, 3vh, 2rem);
-    margin-top: clamp(1.5rem, 3.5vh, 2.25rem);
-    font-size: clamp(0.9rem, 1.6vh, 1.05rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
 }
 
 .listItem {
     display: flex;
-    gap: clamp(0.6rem, 1.2vh, 0.85rem);
+    gap: 0.85rem;
     align-items: flex-start;
+    font-size: clamp(0.9rem, 1.8vh, 1rem);
+    color: var(--ds-text-muted);
+    line-height: 1.6;
 }
 
 .check {
-    margin-top: 0.15rem;
-    width: 14px;
-    height: 14px;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    width: 18px;
+    height: 18px;
     border-radius: 999px;
     background-color: var(--ds-off-white);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     color: var(--ds-deep-navy);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     border: 1px solid var(--ds-border-subtle);
 }
 
+/* Right Column - Metrics */
+.metricsCard {
+    background-color: var(--ds-white);
+    border-radius: var(--ds-radius-lg);
+    border: 1px solid var(--ds-border-subtle);
+    box-shadow: var(--ds-shadow-subtle);
+    overflow: hidden;
+}
+
+.metricsHeader {
+    padding: clamp(1.25rem, 2.5vh, 1.5rem) clamp(1.5rem, 3vh, 2rem);
+    border-bottom: 1px solid var(--ds-border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.metricsTitle {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--ds-text-muted);
+}
+
+.systemActive {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #10b981;
+    /* Green */
+    font-weight: 600;
+}
+
+.greenDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* No gap, using borders instead */
+}
+
+.statItem {
+    padding: clamp(2rem, 4vh, 2.5rem) clamp(1rem, 2vh, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-right: 1px solid var(--ds-border-subtle);
+    border-bottom: 1px solid var(--ds-border-subtle);
+}
+
+/* Remove right border for every 3rd item (end of row) */
+.statItem:nth-child(3n) {
+    border-right: none;
+}
+
+/* Remove bottom border for the last row (items 4, 5, 6) */
+.statItem:nth-last-child(-n+3) {
+    border-bottom: none;
+}
+
+.statIcon {
+    color: var(--ds-amber-orange);
+    margin-bottom: 0.75rem;
+}
+
+.statValue {
+    font-size: clamp(1.75rem, 3.5vh, 2.25rem);
+    font-family: var(--font-montserrat), var(--font-geist-sans), sans-serif;
+    font-weight: 600;
+    color: var(--ds-deep-navy);
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ds-text-muted);
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
+.metricsFooter {
+    background-color: var(--ds-off-white);
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--ds-text-muted);
+    font-style: italic;
+    border-top: 1px solid var(--ds-border-subtle);
+}
+
 @media (max-width: 900px) {
-    .grid {
-        grid-template-columns: minmax(0, 1fr);
+    .contentGrid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
     }
 
-    .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .quoteBlock {
+        padding-left: 1.5rem;
     }
-}
-
-@media (max-width: 640px) {
-    .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: clamp(1rem, 2vh, 1.5rem);
-    }
-
-    .stat {
-        padding: clamp(0.85rem, 1.8vh, 1.2rem) clamp(0.9rem, 2vh, 1.3rem);
-    }
-}
-
-.dotMuted {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background-color: var(--ds-light-grey);
 }
