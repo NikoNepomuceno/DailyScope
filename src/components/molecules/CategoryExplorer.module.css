@@ -16,7 +16,7 @@
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--ds-amber-orange, #f9a60f);
+    color: var(--ds-amber-orange, #FF751F);
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
@@ -24,7 +24,7 @@
 .eyebrowLine {
     width: 20px;
     height: 3px;
-    background-color: var(--ds-amber-orange, #f9a60f);
+    background-color: var(--ds-amber-orange, #FF751F);
     border-radius: 2px;
 }
 
@@ -37,9 +37,8 @@
 }
 
 .titleAccent {
-    font-style: italic;
-    color: var(--ds-amber-orange, #f9a60f);
-    font-weight: 400;
+    color: var(--ds-amber-orange, #FF751F);
+    font-weight: 800;
 }
 
 
@@ -152,11 +151,11 @@
 
 .arrowIcon {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    width: 36px;
-    height: 36px;
-    background: var(--ds-amber-orange, #f9a60f);
+    top: 1rem;
+    right: 1rem;
+    width: 28px;
+    height: 28px;
+    background: var(--ds-amber-orange, #FF751F);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -165,11 +164,37 @@
     opacity: 0;
     transform: translate(-10px, 10px);
     transition: all 0.3s ease;
+    z-index: 3;
 }
 
 .card:hover .arrowIcon {
     opacity: 1;
     transform: translate(0, 0);
+}
+
+/* Hide arrow when card is active (show checkmark instead) */
+.cardActive .arrowIcon {
+    display: none;
+}
+
+.cardActive {
+    outline: 3px solid var(--ds-amber-orange, #FF751F);
+    outline-offset: -3px;
+}
+
+.activeIndicator {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 28px;
+    height: 28px;
+    background: var(--ds-amber-orange, #FF751F);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 3;
 }
 
 

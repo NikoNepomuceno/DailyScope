@@ -68,7 +68,6 @@
 }
 
 .titleHighlight {
-    font-style: italic;
     color: var(--ds-amber-orange);
     font-weight: 700;
 }

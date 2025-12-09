@@ -1,29 +1,47 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import type { NewsArticle } from "@/interfaces/news";
 import FooterSection from "@/components/landing/FooterSection";
 import BreakingTicker from "@/components/molecules/BreakingTicker";
-import CategoryExplorer from "@/components/molecules/CategoryExplorer";
+import CategoryExplorer, { type CategoryCount } from "@/components/molecules/CategoryExplorer";
 import SearchBar from "@/components/molecules/SearchBar";
 import Toolbar from "@/components/organisms/Toolbar";
 import ArticleList from "@/components/organisms/ArticleList";
-import { ArrowRight } from "lucide-react";
 
 interface NewsPageClientProps {
   initialArticles: NewsArticle[];
   initialBreakingArticles: NewsArticle[];
+  initialTopic?: string;
+  totalArticles?: number;
+  categoryCounts?: CategoryCount[];
 }
 
 import styles from "./NewsPage.module.css";
 
-// ... previous imports ...
+const topicTitles: { [key: string]: string } = {
+  general: 'Top Headlines',
+  world: 'World News',
+  politics: 'Politics',
+  business: 'Business',
+  technology: 'Technology',
+  entertainment: 'Entertainment',
+  sports: 'Sports',
+  science: 'Science',
+  health: 'Health'
+};
 
 export default function NewsPageClient({
   initialArticles,
-  initialBreakingArticles
+  initialBreakingArticles,
+  initialTopic = 'general',
+  totalArticles = 0,
+  categoryCounts = []
 }: NewsPageClientProps) {
-
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
   const [articles, setArticles] = useState<NewsArticle[]>(initialArticles);
   const [breakingArticles] = useState<NewsArticle[]>(initialBreakingArticles);
   const [query, setQuery] = useState("");
@@ -32,6 +50,41 @@ export default function NewsPageClient({
   const [darkMode, setDarkMode] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [currentTopic, setCurrentTopic] = useState(initialTopic);
+  const [currentTotalArticles, setCurrentTotalArticles] = useState(totalArticles);
+
+  // Update state when URL params change
+  useEffect(() => {
+    const urlTopic = searchParams.get('topic') || 'general';
+    if (urlTopic !== currentTopic) {
+      setCurrentTopic(urlTopic);
+      fetchArticlesByTopic(urlTopic);
+    }
+  }, [searchParams]);
+
+  // Update articles when initial data changes (from server)
+  useEffect(() => {
+    setArticles(initialArticles);
+    setCurrentTotalArticles(totalArticles);
+  }, [initialArticles, totalArticles]);
+
+  const fetchArticlesByTopic = useCallback(async (topic: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/news?topic=${encodeURIComponent(topic)}`);
+      const data = await res.json();
+      if (data.articles) {
+        // Limit to max 10 articles to avoid rate limiting
+        const limitedArticles = data.articles.slice(0, 10);
+        setArticles(limitedArticles);
+        setCurrentTotalArticles(limitedArticles.length);
+      }
+    } catch (err) {
+      console.error("Failed to fetch topic articles", err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -65,7 +118,10 @@ export default function NewsPageClient({
       const res = await fetch(`/api/news?q=${encodeURIComponent(query)}`);
       const data = await res.json();
       if (data.articles) {
-        setArticles(data.articles);
+        // Limit to max 10 articles to avoid rate limiting
+        const limitedArticles = data.articles.slice(0, 10);
+        setArticles(limitedArticles);
+        setCurrentTotalArticles(limitedArticles.length);
       }
     } catch (err) {
       console.error("Search failed", err);
@@ -96,22 +152,23 @@ export default function NewsPageClient({
     }
   };
 
+  const topicTitle = topicTitles[currentTopic] || 'Top Headlines';
+
   return (
     <div className={styles.page}>
-
-
-
       <BreakingTicker articles={breakingArticles} />
-      <CategoryExplorer />
+      <CategoryExplorer categoryCounts={categoryCounts} />
 
       <main className={styles.main}>
         <div className={styles.shell}>
 
           <header className={styles.header}>
-            <div className={styles.featuredLabel}>Featured Stories</div>
+            <div className={styles.featuredLabel}>
+              {currentTopic !== 'general' ? `${topicTitle} • ${currentTotalArticles} articles available` : 'Featured Stories'}
+            </div>
             <div className={styles.headlineRow}>
               <h1 className={styles.title}>
-                Today&apos;s <span className={styles.titleHighlight}>Top Headlines</span>
+                Today&apos;s <span className={styles.titleHighlight}>{topicTitle}</span>
               </h1>
             </div>
           </header>

@@ -12,6 +12,12 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+[data-theme='dark'] .article {
+    background: var(--ds-slate-blue, #1e293b);
+    border-color: var(--ds-border-subtle, #334155);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* removed hover effects */
 
 .imageWrapper {
@@ -23,6 +29,10 @@
     /* Rounded image corners inside card */
     background-color: var(--ds-skeleton, #f1f5f9);
     margin-bottom: 1.25rem;
+}
+
+[data-theme='dark'] .imageWrapper {
+    background-color: #334155;
 }
 
 .image {
@@ -38,7 +48,7 @@
     position: absolute;
     top: 0.75rem;
     left: 0.75rem;
-    background-color: var(--ds-orange-500, #f97316);
+    background-color: var(--ds-amber-orange, #FF751F);
     color: white;
     padding: 0.25rem 0.75rem;
     border-radius: 999px;
@@ -68,14 +78,13 @@
     margin: 0;
     font-weight: 700;
     line-height: 1.3;
-    color: var(--ds-orange-700, #c2410c);
-    /* Distinctive orange serif title */
+    color: var(--ds-deep-navy, #071f2a);
     font-size: 1.35rem;
     /* Larger title */
 }
 
 [data-theme='dark'] .title {
-    color: #fdba74;
+    color: var(--ds-white, #f8fafc);
 }
 
 .title a {
@@ -98,6 +107,10 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-size: 0.95rem;
+}
+
+[data-theme='dark'] .description {
+    color: #94a3b8;
 }
 
 .footer {

@@ -67,11 +67,11 @@
 }
 
 .searchBtn {
-    background-color: var(--ds-orange-600, #ea580c) !important;
+    background-color: var(--ds-amber-orange, #FF751F) !important;
     /* Force override of default button style */
-    border-color: var(--ds-orange-600, #ea580c) !important;
+    border-color: var(--ds-amber-orange, #FF751F) !important;
 }
 
 .searchBtn:hover {
-    background-color: var(--ds-orange-700, #c2410c) !important;
+    background-color: #FF8A3D !important;
 }

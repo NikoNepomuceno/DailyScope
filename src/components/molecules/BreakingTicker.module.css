@@ -42,11 +42,11 @@
 .badgeLine {
     width: 24px;
     height: 3px;
-    background-color: var(--ds-red-orange, #dc4222);
+    background-color: var(--ds-amber-orange, #FF751F);
 }
 
 .badgeText {
-    color: var(--ds-red-orange, #dc4222);
+    color: var(--ds-amber-orange, #FF751F);
     font-weight: 700;
     font-size: 0.85rem;
     text-transform: uppercase;
@@ -96,20 +96,20 @@
 .primaryButton {
     display: inline-flex;
     align-items: center;
-    background-color: var(--ds-red-orange, #dc4222);
+    background-color: var(--ds-amber-orange, #FF751F);
     color: white;
     padding: 0.8rem 1.5rem;
     border-radius: 6px;
     font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(220, 66, 34, 0.25);
+    box-shadow: 0 4px 12px rgba(255, 117, 31, 0.25);
 }
 
 .primaryButton:hover {
-    background-color: #c03518;
+    background-color: #FF8A3D;
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(220, 66, 34, 0.3);
+    box-shadow: 0 8px 16px rgba(255, 117, 31, 0.3);
 }
 
 .arrowIcon {
