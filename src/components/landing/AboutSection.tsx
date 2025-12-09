@@ -1,33 +1,33 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { TrendingUp, Zap, Clock, Globe, Users, BarChart2, Check } from "lucide-react";
 import styles from "./AboutSection.module.css";
 
-const slideLeftVariants = {
+const slideLeftVariants: Variants = {
   hidden: { opacity: 0, x: -60 },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
       duration: 0.8,
-      ease: [0.215, 0.61, 0.355, 1], // easeOutCubic approx
+      ease: [0.215, 0.61, 0.355, 1] as const, // easeOutCubic approx
     },
   },
 };
 
-const slideRightVariants = {
+const slideRightVariants: Variants = {
   hidden: { opacity: 0, x: 60 },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
       duration: 0.8,
-      ease: [0.215, 0.61, 0.355, 1],
+      ease: [0.215, 0.61, 0.355, 1] as const,
       staggerChildren: 0.1,
     },
   },
 };
 
-const statItemVariants = {
+const statItemVariants: Variants = {
   hidden: { opacity: 0, y: 18, scale: 0.97 },
   visible: {
     opacity: 1,
